@@ -286,11 +286,11 @@ class MkraftmanAppleTVKeyboard extends HTMLElement {
   }
 }
 
-customElements.define("mkraftman-appletv-keyboard", MkraftmanAppleTVKeyboard);
+customElements.define("mkraftman-apple-tv-keyboard", MkraftmanAppleTVKeyboard);
 
 window.customCards = window.customCards || [];
 window.customCards.push({
-  type: "mkraftman-appletv-keyboard",
-  name: "Apple TV Keyboard",
+  type: "mkraftman-apple-tv-keyboard",
+  name: "Mkraftman Apple TV Keyboard",
   description: "Real-time keyboard input for Apple TV using the existing persistent connection.",
 });

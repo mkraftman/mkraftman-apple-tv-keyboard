@@ -68,8 +68,8 @@ class MkraftmanAppleTVKeyboard extends HTMLElement {
 
         /* Idle state: keyboard icon */
         .kb-btn {
-          width: 56px;
-          height: 56px;
+          width: 36px;
+          height: 36px;
           border-radius: 50%;
           border: none;
           background: rgba(var(--rgb-blue, 68, 115, 158), 0.2);
@@ -86,7 +86,7 @@ class MkraftmanAppleTVKeyboard extends HTMLElement {
           background: rgba(var(--rgb-blue, 68, 115, 158), 0.35);
         }
         .kb-btn ha-icon {
-          transform: scale(1.7);
+          transform: scale(1.2);
         }
 
         /* Active state: text display + clear button */
@@ -94,7 +94,7 @@ class MkraftmanAppleTVKeyboard extends HTMLElement {
           display: none;
           align-items: center;
           width: 100%;
-          height: 56px;
+          height: 36px;
           gap: 8px;
         }
         .active-row.visible {
@@ -109,8 +109,8 @@ class MkraftmanAppleTVKeyboard extends HTMLElement {
           overflow: hidden;
           text-overflow: ellipsis;
           user-select: none;
-          height: 56px;
-          line-height: 56px;
+          height: 36px;
+          line-height: 36px;
           cursor: text;
         }
         .text-display.placeholder {
@@ -118,8 +118,8 @@ class MkraftmanAppleTVKeyboard extends HTMLElement {
         }
         .clear-btn {
           flex-shrink: 0;
-          width: 56px;
-          height: 56px;
+          width: 36px;
+          height: 36px;
           border-radius: 50%;
           border: none;
           background: rgba(var(--rgb-blue, 68, 115, 158), 0.2);

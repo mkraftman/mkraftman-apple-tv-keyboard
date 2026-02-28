@@ -56,7 +56,7 @@ class MkraftmanAppleTVKeyboard extends HTMLElement {
           display: block;
           height: 100%;
         }
-        ha-card {
+        .card {
           background: #132532;
           border-radius: 12px;
           padding: 12px;
@@ -149,7 +149,7 @@ class MkraftmanAppleTVKeyboard extends HTMLElement {
         }
       </style>
 
-      <ha-card>
+      <div class="card">
         <button class="kb-btn" id="kbBtn">
           <ha-icon icon="mdi:keyboard"></ha-icon>
         </button>
@@ -158,7 +158,7 @@ class MkraftmanAppleTVKeyboard extends HTMLElement {
           <button class="clear-btn" id="clearBtn">&times;</button>
         </div>
         <input class="hidden-input" id="hiddenInput" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-      </ha-card>
+      </div>
     `;
 
     this._el.kbBtn = shadow.getElementById("kbBtn");

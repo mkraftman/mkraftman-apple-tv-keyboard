@@ -57,7 +57,7 @@ class MkraftmanAppleTVKeyboard extends HTMLElement {
           height: 100%;
         }
         .card {
-          background: #102229;
+          background: #071926;
           border-radius: 12px;
           padding: 12px;
           box-sizing: border-box;

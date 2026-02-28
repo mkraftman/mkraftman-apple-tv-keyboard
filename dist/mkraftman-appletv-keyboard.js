@@ -29,11 +29,15 @@ class MkraftmanAppleTVKeyboard extends HTMLElement {
   }
 
   getCardSize() {
-    return 1;
+    return 2;
   }
 
   getGridOptions() {
-    return { rows: 1, columns: 12, min_rows: 1, min_columns: 6 };
+    return { rows: 2, columns: 12, min_rows: 2, min_columns: 6 };
+  }
+
+  getLayoutOptions() {
+    return { grid_columns: 4, grid_rows: 2 };
   }
 
   set hass(hass) {
@@ -50,14 +54,16 @@ class MkraftmanAppleTVKeyboard extends HTMLElement {
       <style>
         :host {
           display: block;
+          height: 100%;
         }
-        .card {
+        ha-card {
           background: #132532;
           border-radius: 12px;
           padding: 12px;
           box-sizing: border-box;
           display: flex;
           align-items: center;
+          height: 100%;
         }
 
         /* Idle state: keyboard icon */
@@ -88,6 +94,7 @@ class MkraftmanAppleTVKeyboard extends HTMLElement {
           display: none;
           align-items: center;
           width: 100%;
+          height: 56px;
           gap: 8px;
         }
         .active-row.visible {
@@ -102,8 +109,8 @@ class MkraftmanAppleTVKeyboard extends HTMLElement {
           overflow: hidden;
           text-overflow: ellipsis;
           user-select: none;
-          min-height: 36px;
-          line-height: 36px;
+          height: 56px;
+          line-height: 56px;
           cursor: text;
         }
         .text-display.placeholder {
@@ -111,8 +118,8 @@ class MkraftmanAppleTVKeyboard extends HTMLElement {
         }
         .clear-btn {
           flex-shrink: 0;
-          width: 36px;
-          height: 36px;
+          width: 56px;
+          height: 56px;
           border-radius: 50%;
           border: none;
           background: rgba(var(--rgb-blue, 68, 115, 158), 0.2);
@@ -122,7 +129,7 @@ class MkraftmanAppleTVKeyboard extends HTMLElement {
           align-items: center;
           justify-content: center;
           padding: 0;
-          font-size: 18px;
+          font-size: 24px;
           font-weight: 700;
           line-height: 1;
           transition: background 0.15s;
@@ -142,7 +149,7 @@ class MkraftmanAppleTVKeyboard extends HTMLElement {
         }
       </style>
 
-      <div class="card">
+      <ha-card>
         <button class="kb-btn" id="kbBtn">
           <ha-icon icon="mdi:keyboard"></ha-icon>
         </button>
@@ -151,7 +158,7 @@ class MkraftmanAppleTVKeyboard extends HTMLElement {
           <button class="clear-btn" id="clearBtn">&times;</button>
         </div>
         <input class="hidden-input" id="hiddenInput" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" />
-      </div>
+      </ha-card>
     `;
 
     this._el.kbBtn = shadow.getElementById("kbBtn");

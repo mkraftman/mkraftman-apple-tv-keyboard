@@ -29,15 +29,15 @@ class MkraftmanAppleTVKeyboard extends HTMLElement {
   }
 
   getCardSize() {
-    return 1;
+    return 2;
   }
 
   getGridOptions() {
-    return { rows: 1, columns: 12, min_rows: 1, min_columns: 6 };
+    return { rows: 2, columns: 12, min_rows: 2, min_columns: 6 };
   }
 
   getLayoutOptions() {
-    return { grid_columns: 4, grid_rows: 1 };
+    return { grid_columns: 4, grid_rows: 2 };
   }
 
   set hass(hass) {
@@ -68,8 +68,8 @@ class MkraftmanAppleTVKeyboard extends HTMLElement {
 
         /* Idle state: keyboard icon */
         .kb-btn {
-          width: 36px;
-          height: 36px;
+          width: 56px;
+          height: 56px;
           border-radius: 50%;
           border: none;
           background: rgba(var(--rgb-blue, 68, 115, 158), 0.2);
@@ -86,7 +86,7 @@ class MkraftmanAppleTVKeyboard extends HTMLElement {
           background: rgba(var(--rgb-blue, 68, 115, 158), 0.35);
         }
         .kb-btn ha-icon {
-          transform: scale(1.2);
+          transform: scale(1.7);
         }
 
         /* Active state: text display + clear button */
@@ -94,7 +94,7 @@ class MkraftmanAppleTVKeyboard extends HTMLElement {
           display: none;
           align-items: center;
           width: 100%;
-          height: 36px;
+          height: 56px;
           gap: 8px;
         }
         .active-row.visible {
@@ -109,8 +109,8 @@ class MkraftmanAppleTVKeyboard extends HTMLElement {
           overflow: hidden;
           text-overflow: ellipsis;
           user-select: none;
-          height: 36px;
-          line-height: 36px;
+          height: 56px;
+          line-height: 56px;
           cursor: text;
         }
         .text-display.placeholder {
@@ -188,13 +188,13 @@ class MkraftmanAppleTVKeyboard extends HTMLElement {
       this._deactivate();
     });
 
-    // Keep keyboard alive: refocus on blur if still active
+    // When keyboard dismisses (input loses focus), deactivate
     this._el.hiddenInput.addEventListener("blur", () => {
       if (this._active) {
-        // Small delay to allow clear button click to register
+        // Small delay to allow clear button click to register first
         setTimeout(() => {
           if (this._active) {
-            this._el.hiddenInput.focus();
+            this._deactivate();
           }
         }, 200);
       }

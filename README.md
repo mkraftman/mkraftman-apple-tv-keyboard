@@ -14,7 +14,7 @@ Instead of spawning a new `atvremote` process for each keystroke, this card uses
 ### HACS
 
 1. Add this repository as a custom repository in HACS (category: Lovelace)
-2. Install "Apple TV Keyboard"
+2. Install "Mkraftman Apple TV Keyboard"
 3. Add the card to your dashboard
 
 ### Manual
@@ -24,7 +24,7 @@ Copy `dist/mkraftman-appletv-keyboard.js` to `/config/www/` and add it as a Love
 ## Configuration
 
 ```yaml
-type: custom:mkraftman-appletv-keyboard
+type: custom:mkraftman-apple-tv-keyboard
 entity: remote.apple_tv_living_room
 ```
 

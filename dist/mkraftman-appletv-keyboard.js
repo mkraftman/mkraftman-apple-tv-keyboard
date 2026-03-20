@@ -57,36 +57,37 @@ class MkraftmanAppleTVKeyboard extends HTMLElement {
           height: 100%;
         }
         .card {
-          background: #102229;
+          background: transparent;
           border-radius: 12px;
           padding: 12px;
           box-sizing: border-box;
           display: flex;
           align-items: center;
+          justify-content: center;
           height: 100%;
         }
 
         /* Idle state: keyboard icon */
         .kb-btn {
-          width: 56px;
-          height: 56px;
-          border-radius: 50%;
+          width: 55px;
+          height: 55px;
+          border-radius: 0;
           border: none;
-          background: rgba(var(--rgb-blue, 68, 115, 158), 0.2);
-          color: var(--primary-text-color, #fff);
+          background: transparent;
+          color: #A9A9A9;
           cursor: pointer;
           display: flex;
           align-items: center;
           justify-content: center;
           padding: 0;
-          transition: background 0.15s;
+          transition: opacity 0.15s;
           -webkit-tap-highlight-color: transparent;
         }
         .kb-btn:active {
-          background: rgba(var(--rgb-blue, 68, 115, 158), 0.35);
+          opacity: 0.6;
         }
         .kb-btn ha-icon {
-          transform: scale(1.7);
+          --mdc-icon-size: 55px;
         }
 
         /* Active state: text display + clear button */
@@ -142,16 +143,28 @@ class MkraftmanAppleTVKeyboard extends HTMLElement {
         /* Hidden input to capture native keyboard */
         .hidden-input {
           position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 1px;
           opacity: 0;
-          width: 0;
-          height: 0;
+          border: none;
+          outline: none;
+          padding: 0;
+          margin: 0;
+          font-size: 16px;
+          color: transparent;
+          caret-color: transparent;
+          background: transparent;
           pointer-events: none;
+          -webkit-appearance: none;
+          -webkit-text-fill-color: transparent;
         }
       </style>
 
       <div class="card">
         <button class="kb-btn" id="kbBtn">
-          <ha-icon icon="mdi:keyboard"></ha-icon>
+          <ha-icon icon="mdi:keyboard-outline"></ha-icon>
         </button>
         <div class="active-row" id="activeRow">
           <div class="text-display placeholder" id="textDisplay">Type something...</div>
@@ -180,21 +193,27 @@ class MkraftmanAppleTVKeyboard extends HTMLElement {
       const text = this._el.hiddenInput.value;
       this._updateTextDisplay(text);
       this._throttledSend(text);
+      // Snap back to saved scroll position to prevent iOS drift
+      if (this._savedScrollY !== null) {
+        requestAnimationFrame(() => {
+          window.scrollTo(0, this._savedScrollY);
+        });
+      }
     });
 
-    // Clear button → deactivate
+    // Clear button → deactivate and clear text on Apple TV
     this._el.clearBtn.addEventListener("click", (e) => {
       e.stopPropagation();
-      this._deactivate();
+      this._deactivate(true);
     });
 
-    // When keyboard dismisses (input loses focus), deactivate
+    // When keyboard dismisses (input loses focus), deactivate UI only (keep text on Apple TV)
     this._el.hiddenInput.addEventListener("blur", () => {
       if (this._active) {
         // Small delay to allow clear button click to register first
         setTimeout(() => {
           if (this._active) {
-            this._deactivate();
+            this._deactivate(false);
           }
         }, 200);
       }
@@ -205,19 +224,29 @@ class MkraftmanAppleTVKeyboard extends HTMLElement {
 
   _activate() {
     this._active = true;
+    this._savedScrollY = null;
     this._el.kbBtn.style.display = "none";
     this._el.activeRow.classList.add("visible");
     this._el.hiddenInput.value = "";
     this._updateTextDisplay("");
     this._el.hiddenInput.style.pointerEvents = "auto";
     this._el.hiddenInput.focus();
+    // Scroll the card into view above the keyboard, then save that position
+    setTimeout(() => {
+      this.scrollIntoView({ behavior: "smooth", block: "end" });
+      // Save the scroll position after the smooth scroll completes
+      setTimeout(() => {
+        this._savedScrollY = window.scrollY;
+      }, 500);
+    }, 300);
   }
 
-  _deactivate() {
+  _deactivate(clearText) {
     this._active = false;
+    this._savedScrollY = null;
 
-    // Clear on Apple TV
-    if (this._hass && this._config) {
+    // Only clear on Apple TV if explicitly requested (clear button)
+    if (clearText && this._hass && this._config) {
       this._hass.callService("apple_tv_keyboard", "text_clear", {
         entity_id: this._config.entity,
       });

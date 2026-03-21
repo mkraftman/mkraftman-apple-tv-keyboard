@@ -231,6 +231,12 @@ class MkraftmanAppleTVKeyboard extends HTMLElement {
     this._updateTextDisplay("");
     this._el.hiddenInput.style.pointerEvents = "auto";
     this._el.hiddenInput.focus();
+    // Clear any existing text on the Apple TV to keep in sync
+    if (this._hass && this._config) {
+      this._hass.callService("apple_tv_keyboard", "text_clear", {
+        entity_id: this._config.entity,
+      });
+    }
     // Scroll the card into view above the keyboard, then save that position
     setTimeout(() => {
       this.scrollIntoView({ behavior: "smooth", block: "end" });

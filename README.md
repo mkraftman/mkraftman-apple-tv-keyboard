@@ -37,3 +37,7 @@ entity: remote.apple_tv_living_room
 1. Tap the keyboard icon to activate
 2. Type on the native keyboard — text appears on Apple TV in real-time
 3. Tap X to clear text and dismiss
+
+## Releasing
+
+Bump the version in `VERSION` (e.g. `1.0.1`) and push to `main`. The release workflow creates the matching `vX.Y.Z` tag and GitHub release with `dist/mkraftman-appletv-keyboard.js` attached. Pushing a `vX.Y.Z` tag directly also still works.
